@@ -33,7 +33,7 @@ router.post('', async ({ body }, res) => {
   }
   const newProduct = await productsStore.save({ title, price: priceParsed, thumbnail });
   console.log(newProduct);
-  res.json(newProduct);
+  res.redirect('/');
 });
 
 // Actualiza un producto por su :id y datos en el body
@@ -47,10 +47,10 @@ router.put('/:id', async ({ params, body }, res) => {
   if (isNaN(priceParsed)) {
     return res.json({ error: 'El precio no es un numero' });
   }
-  
+
   const productExist = await productsStore.getById(id);
   if (productExist) {
-    const product = await productsStore.update(id, { title, price: priceParsed, thumbnail});
+    const product = await productsStore.update(id, { title, price: priceParsed, thumbnail });
     console.log(product);
     res.json(product);
   }
@@ -66,10 +66,13 @@ router.delete('/:id', async ({ params }, res) => {
 
   const productExist = await productsStore.getById(id);
   if (productExist) {
-    const message = await productsStore.deleteById(id)
+    const message = await productsStore.deleteById(id);
     res.json({ msg: message });
   }
   return res.json({ error: 'Producto no encontrado' });
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  productsStore
+};

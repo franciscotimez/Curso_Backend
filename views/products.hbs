@@ -1,0 +1,25 @@
+<div class="container-md">
+  <h1>Productos</h1>
+  <a class="btn btn-primary m-2" href="/" role="button">Add New Product</a>
+  <div class="row row-cols-1 row-cols-md-2 g-6">
+    {{#if listExists}}
+      {{#each products}}
+        <div class="col-md-2">
+          <div class="card">
+            <img
+              src="{{this.thumbnail}}"
+              class="card-img-top"
+              alt="{{this.title}}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{this.title}}</h5>
+            </div>
+            <h6 class="card-footer">Precio: ${{this.price}}</h6>
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      <h2>No Hay productos</h2>
+    {{/if}}
+  </div>
+</div>
