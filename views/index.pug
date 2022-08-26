@@ -1,0 +1,19 @@
+extends layout.pug
+
+block content
+    .container-md
+        .row
+            .col-6
+                h1 Ingreso Producto
+                form(method='POST' action='/api/productos/')
+                    .mb-3
+                        label( for="inputTitle", class="form-label") Product Title
+                        input( type="text", class="form-control", id="inputTitle", name="title")
+                    .mb-3
+                        label( for="inputPrice", class="form-label") Price
+                        input( type="text", class="form-control", id="inputPrice", name="price")
+                    .mb-3
+                        label( for="inputUrl", class="form-label") Image Url
+                        input( type="text", class="form-control", id="inputUrl", name="thumbnail")
+                    button( type="submit", class="btn btn-primary") Submit
+                    a( class="btn btn-primary m-2", href="/productos", role="button") List Products

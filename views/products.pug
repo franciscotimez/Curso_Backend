@@ -1,0 +1,14 @@
+extends layout.pug
+
+block content
+    .container-md
+        h1 Productos
+        a( class="btn btn-primary m-2", href="/", role="button") Add New Product
+        div(class="row row-cols-1 row-cols-md-2 g-6")
+            each val in products
+                .col-md-2
+                    .card
+                        img(src=val.thumbnail, class="card-img-top" alt=val.title)
+                        .card-body
+                            h5.card-title #{val.title}
+                        h6.card-footer Precio: $#{val.price}
