@@ -1,32 +1,66 @@
-const socket = io();
+let socket = io();
 
+let productsData = [];
 
-console.log("Holis")
-let template = `{{#each products}}
-  <div class="col-md-2">
-    <div class="card">
-      <img
-        src="{{this.thumbnail}}"
-        class="card-img-top"
-        alt="{{this.title}}"
-      />
-      <div class="card-body">
-        <h5 class="card-title">{{this.title}}</h5>
-      </div>
-      <h6 class="card-footer">Precio: \${{this.price}}</h6>
-    </div>
-  </div>
-{{/each}}
-`;
+let templates = {
+  productsList: {
+    url: './resources/views/products_list.hbs',
+    template: ''
+  }
+};
 
-console.log(template);
+const loadTempletes = async () => {
+  for (key in templates) {
+    let template = await fetch(templates[key].url);
+    templates[key].template = await template.text();
+  }
+  console.log(templates);
+};
+
+loadTempletes();
+
 
 socket.on('products-channel', (data) => {
-    console.log("Data recibida por products-channel: ", data);
-    let renderProducts = Handlebars.compile(template);
-    // console.log(renderProducts());
-    document.getElementById("products-list").innerHTML = renderProducts({
-        products: data,
-        listExists: data.length > 0
-      });
+  console.log("Data recibida por products-channel: ", data);
+  productsData = data;
+  
+  let renderProducts = Handlebars.compile(templates.productsList.template);
+  document.getElementById("products-list").innerHTML = renderProducts({
+    products: productsData,
+    listExists: productsData.length > 0
+  });
+});
+
+socket.on("newProduct-channel", (data) => {
+  console.log("Nuevo Producto Recibido");
+  productsData = [...productsData, data]
+  
+  let renderProducts = Handlebars.compile(templates.productsList.template);
+  document.getElementById("products-list").innerHTML = renderProducts({
+    products: productsData,
+    listExists: productsData.length > 0
+  });
+});
+
+// listener para el formulario de producto
+const formProduct = document.getElementById("form-product");
+formProduct.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const data = {
+    title: formProduct.elements["title"].value,
+    price: formProduct.elements["price"].value,
+    thumbnail: formProduct.elements["thumbnail"].value
+  }
+
+  const res = await fetch("/api/productos", {
+    method: 'POST', // or 'PUT'
+    body: JSON.stringify(data), // data can be `string` or {object}!
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  })
+  const newProduct = await res.json()
+  console.log(newProduct);
+  socket.emit("newProduct-channel", newProduct);
 });

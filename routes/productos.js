@@ -33,7 +33,7 @@ router.post('', async ({ body }, res) => {
   }
   const newProduct = await productsStore.save({ title, price: priceParsed, thumbnail });
   console.log(newProduct);
-  res.redirect('/');
+  return res.json(newProduct);
 });
 
 // Actualiza un producto por su :id y datos en el body

@@ -3,7 +3,7 @@
     <div class="col-6">
 
       <h1>Ingreso Producto</h1>
-      <form method="post" action="/api/productos/">
+      <form id="form-product" method="post" action="/api/productos/">
         <div class="mb-3">
           <label for="inputTitle" class="form-label">Product Title</label>
           <input
@@ -31,15 +31,11 @@
             name="thumbnail"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" form="form-product" class="btn btn-primary">Submit</button>
       </form>
-      <div class="container-md">
-        <h1>Productos</h1>
-        <hr />
-        <div class="row row-cols-1 row-cols-md-2 g-6">
-          <div id="products-list"></div>
-        </div>
-      </div>
+      <div id="products-list"></div>
     </div>
+    <div id="chat-box" class="col-6">
+</div>
   </div>
 </div>
