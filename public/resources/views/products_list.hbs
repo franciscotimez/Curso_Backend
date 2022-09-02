@@ -3,17 +3,23 @@
   <div class="row row-cols-1 row-cols-md-2 g-6">
     {{#if listExists}}
       {{#each products}}
-        <div class="col-md-2">
+        <div class="col-md-12">
           <div class="card">
-            <img
-              src="{{this.thumbnail}}"
-              class="card-img-top"
-              alt="{{this.title}}"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{this.title}}</h5>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <img
+                  src="{{this.thumbnail}}"
+                  class="img-thumbnail"
+                  alt="{{this.title}}"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{this.title}}</h5>
+                </div>
+                <h6 class="card-footer">Precio: ${{this.price}}</h6>
+              </div>
             </div>
-            <h6 class="card-footer">Precio: ${{this.price}}</h6>
           </div>
         </div>
       {{/each}}

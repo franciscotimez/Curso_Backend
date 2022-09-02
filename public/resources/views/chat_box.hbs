@@ -1,0 +1,12 @@
+<h1>Centro de mensajes</h1>
+  <h5>Usuario: {{userEmail}}</h5>
+  <div id="message-list">
+
+  </div>
+<form id="form-chat" data-user="{{userEmail}}">
+  <div class="mb-3">
+    <label for="inputMsg" class="form-label">Mensaje</label>
+    <input type="text" class="form-control" id="inputMsg" name="message" />
+  </div>
+  <button type="submit" form="form-chat" class="btn btn-primary">Enviar</button>
+</form>

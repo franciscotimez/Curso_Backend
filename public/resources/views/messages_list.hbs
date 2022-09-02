@@ -1,0 +1,11 @@
+{{#if msgExists}}
+  {{#each messages}}
+    <p class="m-0">
+      <span style="color: blue;font-weight: bold;">{{this.user}}</span>
+      <span style="color: brown;">[{{this.date}}]</span>
+      <span style="color: green;font-style: italic;">: {{this.message}}</span>
+    </p>
+  {{/each}}
+{{else}}
+  <h6>No hay mensajes</h6>
+{{/if}}

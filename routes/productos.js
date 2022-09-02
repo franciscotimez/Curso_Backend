@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const productsStore = require('../store/indexContenedor');
+const { productos:productsStore } = require('../store/indexContenedor');
 
 // Obtiene todos los productos
 router.get('', async (req, res) => {

@@ -20,6 +20,9 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = new Server(server);
 
+const { mensajes } = require('./store/indexContenedor');
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -50,6 +53,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
+let messagesContainer = [];
 // Socket.io Events
 io.on('connection', async (socket) => {
   console.log('a user connected');
@@ -60,13 +64,18 @@ io.on('connection', async (socket) => {
     console.log("Recibido: ", data);
     io.emit('newProduct-channel', data);
   });
-  
+
+  socket.on("newMessage-channel", async (data) => {
+    console.log("Recibido: ", data);
+    await mensajes.save(data);
+    messagesContainer = [...messagesContainer, data];
+    io.emit('newMessage-channel', data);
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
 });
-
-
 
 
 server.listen(port);
