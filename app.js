@@ -1,4 +1,6 @@
 const { normalizePort, onError } = require('./helpers/helpers');
+const { normalizeProduct } = require('./routes/helpers/product');
+const { normalizeCart } = require('./routes/helpers/cart');
 const createError = require('http-errors');
 var debug = require('debug')('proyectoexpress:server');
 const express = require('express');
@@ -57,3 +59,33 @@ server.on('listening', () => {
   debug('Listening on ' + bind);
 });
 
+const prod1 = normalizeProduct({
+  id: 123,
+  name: "Escruadar",
+  description: "Uasdanosdn",
+  code: 15654,
+  image: "http://asdlbalsd",
+  price: 2342.23,
+  stock: 4,
+});
+
+const prod2 = normalizeProduct({
+  id: 12346,
+  timestamp: 1662295098439,
+  name: "regla",
+  description: "Uasdanosdn",
+  code: 765,
+  image: "http://afsaqe",
+  price: 654,
+  stock: 2,
+});
+
+const cart1 = normalizeCart({
+  id: 12346,
+  products: [
+    prod1,
+    prod2,
+  ]
+});
+
+console.log(cart1);
