@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { productos:productsStore } = require('../store/indexContenedor');
+const { productsStore } = require('../store/storeContenedores');
+const { normalizeProduct } = require('./helpers/product');
 
 // Obtiene todos los productos
 router.get('', async (req, res) => {
@@ -26,14 +27,15 @@ router.get('/:id', async ({ params }, res) => {
 
 // Crea un producto datos en el body
 router.post('', async ({ body }, res) => {
-  const { title, price, thumbnail } = body;
-  const priceParsed = parseFloat(price);
-  if (isNaN(priceParsed)) {
-    return res.json({ error: 'El precio no es un numero' });
+  try {
+    delete body.id
+    delete body.timestamp
+    const newProduct = await productsStore.save(normalizeProduct(body));
+    console.log(newProduct);
+    return res.json(newProduct);
+  } catch (error) {
+    return res.json({ error: error.message });
   }
-  const newProduct = await productsStore.save({ title, price: priceParsed, thumbnail });
-  console.log(newProduct);
-  return res.json(newProduct);
 });
 
 // Actualiza un producto por su :id y datos en el body

@@ -60,7 +60,7 @@ server.on('listening', () => {
 });
 
 const prod1 = normalizeProduct({
-  id: 123,
+  id: "12",
   name: "Escruadar",
   description: "Uasdanosdn",
   code: 15654,
@@ -81,7 +81,6 @@ const prod2 = normalizeProduct({
 });
 
 const cart1 = normalizeCart({
-  id: 12346,
   products: [
     prod1,
     prod2,
