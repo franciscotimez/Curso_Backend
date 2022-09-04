@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { productsStore } = require('./productos');
+const { productsStore } = require('./products');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
