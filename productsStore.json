@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "timestamp": 1662383546041,
+    "name": "Escuadra",
+    "description": "Corporis est molestiae quis cupiditate aliquid quos corrupti autem. Enim illo et et officiis tempore. Enim fuga unde voluptas sit sint.",
+    "code": 96,
+    "image": "http://placeimg.com/640/480",
+    "price": 854,
+    "stock": 634
+  },
+  {
+    "id": 2,
+    "timestamp": 1662383565456,
+    "name": "Incredible Metal Chair",
+    "description": "Magnam dolores excepturi. Consequatur est ut qui consequatur ab. Pariatur expedita nemo provident et voluptatem aut ut. In vero ullam accusamus qui illo. Sint nemo sint nesciunt expedita hic.",
+    "code": 817,
+    "image": "http://placeimg.com/640/480",
+    "price": 352,
+    "stock": 224
+  },
+  {
+    "id": 3,
+    "timestamp": 1662383574683,
+    "name": "Ergonomic Granite Pants",
+    "description": "A ducimus enim cupiditate recusandae laborum placeat incidunt. Dolorem corporis assumenda atque rerum. Laudantium voluptatem sed officiis. Nam omnis ratione esse omnis eveniet expedita sint. Aut eos sit cum et. Corporis qui quo.",
+    "code": 510,
+    "image": "http://placeimg.com/640/480",
+    "price": 428,
+    "stock": 1000
+  },
+  {
+    "id": 4,
+    "timestamp": 1662385963235,
+    "name": "Sleek Concrete Keyboard",
+    "description": "Aspernatur praesentium accusamus ut. Officia repellendus voluptas sunt ab. Incidunt beatae iusto rerum reprehenderit. Explicabo odit corrupti possimus quasi aut.",
+    "code": 32,
+    "image": "http://placeimg.com/640/480",
+    "price": 465,
+    "stock": 926
+  },
+  {
+    "id": 5,
+    "timestamp": 1662386042312,
+    "name": "Handmade Rubber Hat",
+    "description": "Incidunt qui aut officia cum velit nostrum esse rerum. Non magni accusantium perferendis ut voluptatem ipsa. Dolore rerum est voluptatem possimus porro voluptates a. Odio pariatur eum placeat.",
+    "code": 520,
+    "image": "http://placeimg.com/640/480",
+    "price": 621,
+    "stock": 285
+  }
+]

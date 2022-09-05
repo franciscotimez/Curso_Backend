@@ -18,7 +18,6 @@ router.get('/:id', async ({ params }, res) => {
   }
 
   const product = await productsStore.getById(id);
-  console.log(product);
   if (product) {
     return res.json(product);
   }
@@ -28,10 +27,10 @@ router.get('/:id', async ({ params }, res) => {
 // Crea un producto datos en el body
 router.post('', async ({ body }, res) => {
   try {
-    delete body.id
-    delete body.timestamp
+    delete body.id;
+    delete body.timestamp;
     const newProduct = await productsStore.save(normalizeProduct(body));
-    console.log(newProduct);
+    res.status(201);
     return res.json(newProduct);
   } catch (error) {
     return res.json({ error: error.message });
@@ -44,19 +43,18 @@ router.put('/:id', async ({ params, body }, res) => {
   if (isNaN(id)) {
     return res.json({ error: 'El parametro no es un numero' });
   }
-  const { title, price, thumbnail } = body;
-  const priceParsed = parseFloat(price);
-  if (isNaN(priceParsed)) {
-    return res.json({ error: 'El precio no es un numero' });
-  }
 
-  const productExist = await productsStore.getById(id);
-  if (productExist) {
-    const product = await productsStore.update(id, { title, price: priceParsed, thumbnail });
-    console.log(product);
-    res.json(product);
+  try {
+    delete body.id;
+    const productExist = await productsStore.getById(id);
+    if (productExist) {
+      const product = await productsStore.update(id, normalizeProduct({ ...productExist, ...body }));
+      return res.json(product);
+    }
+    return res.json({ error: 'Producto no encontrado' });
+  } catch (error) {
+    return res.json({ error: error.message });
   }
-  return res.json({ error: 'Producto no encontrado' });
 });
 
 // Elimina un producto por su :id
@@ -69,7 +67,7 @@ router.delete('/:id', async ({ params }, res) => {
   const productExist = await productsStore.getById(id);
   if (productExist) {
     const message = await productsStore.deleteById(id);
-    res.json({ msg: message });
+    return res.json({ msg: message });
   }
   return res.json({ error: 'Producto no encontrado' });
 });

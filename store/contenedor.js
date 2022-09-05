@@ -10,11 +10,11 @@ class Contenedor {
     async save(obj) {
         let data = await this.getAll();
         const newObj = { id: ++this.lastId, ...obj };
-        console.log(`Nuevo objeto: `, newObj);
+        // console.log(`Nuevo objeto: `, newObj);
         data = [...data, newObj];
 
         await fs.writeFile(this.filePath, JSON.stringify(data, null, 2));
-        console.log(`Se creo archivo ${this.filePath}`);
+        // console.log(`Se creo archivo ${this.filePath}`);
         return newObj;
     }
 
@@ -29,13 +29,13 @@ class Contenedor {
             let data = JSON.parse(raw);
             let lastId = [0, ...data.map(item => item.id)];
             this.lastId = Math.max(...lastId);
-            console.log(`Se leyo archivo ${this.filePath}, lastId: `, this.lastId);
+            // console.log(`Se leyo archivo ${this.filePath}, lastId: `, this.lastId);
             return data;
         } catch (e) {
             if (e.code === 'ENOENT') {
                 try {
                     await fs.writeFile(this.filePath, JSON.stringify([]));
-                    console.log(`Se creo archivo ${this.filePath}`);
+                    // console.log(`Se creo archivo ${this.filePath}`);
                     return [];
                 } catch (error) {
                     return `No se puede modificar los datos`;
@@ -47,7 +47,7 @@ class Contenedor {
     async deleteById(id) {
         let data = await this.getAll();
         let datafiltered = data.filter(item => item.id != id);
-        console.log("delete by id", datafiltered);
+        // console.log("delete by id", datafiltered);
         try {
             await fs.writeFile(this.filePath, JSON.stringify(datafiltered, null, 2));
             return `Producto borrado`;
@@ -77,7 +77,7 @@ class Contenedor {
         });
 
         await fs.writeFile(this.filePath, JSON.stringify(newData, null, 2));
-        console.log(`Se creo archivo ${this.filePath}`);
+        // console.log(`Se creo archivo ${this.filePath}`);
         const updatedObj = await this.getById(id);
         return updatedObj;
     }
