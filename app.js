@@ -10,7 +10,8 @@ const logger = require('morgan');
 
 // Import Routers
 const indexRouter = require('./routes/index');
-const { router: productsRouter, productsStore } = require('./routes/products');
+const { router: productsRouter } = require('./routes/products');
+const { router: cartRouter } = require('./routes/cart');
 
 const http = require('http');
 
@@ -32,6 +33,7 @@ app.use(cookieParser());
 // Link routers
 app.use('/', indexRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/cart', cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

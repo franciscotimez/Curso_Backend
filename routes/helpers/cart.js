@@ -19,7 +19,6 @@ const normalizeCart = (cart) => {
         }
     }
     
-    
     for (const key in cart.products) {
         try {
             cart.products[key] = normalizeProduct(cart.products[key]);
@@ -33,7 +32,7 @@ const normalizeCart = (cart) => {
     return {
         ...(id ? { id } : {}),
         timestamp,
-        products
+        ...(products ? { products } : {products: []})
     };
 };
 
