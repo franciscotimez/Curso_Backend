@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "c509e0e2-5a23-4de4-8bbb-13ec8160c9d5",
+		"name": "eCommerce API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13596887"
+	},
+	"item": [
+		{
+			"name": "List all products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json()\r",
+							"pm.collectionVariables.set(\"product_id\", res[0].id);\r",
+							"\r",
+							"const ids = res.map((item) => {return item.id});\r",
+							"pm.environment.set(\"product_id_random\", ids[Math.floor(Math.random() * ids.length)]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriProducts}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriProducts}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json()\r",
+							"pm.test(\"Error undefined\", () => {\r",
+							"    pm.expect(res.error).to.undefined\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriProducts}}/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriProducts}}",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{product_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json()\r",
+							"pm.collectionVariables.set(\"new_product\", res.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomLoremParagraph}}\",\r\n    \"code\": {{$randomInt}},\r\n    \"image\": \"{{$randomImageUrl}}\",\r\n    \"price\": {{$randomInt}},\r\n    \"stock\": {{$randomInt}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriProducts}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriProducts}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\": {{$randomInt}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriProducts}}/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriProducts}}",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{new_product}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriProducts}}/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriProducts}}",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{new_product}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json()\r",
+							"pm.collectionVariables.set(\"cart_id\", res.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriCart}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriCart}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriCart}}/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriCart}}",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{cart_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all products in cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriCart}}/:id/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriCart}}",
+						":id",
+						"products"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{cart_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add products in cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_id\": {{product_id_random}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriCart}}/:id/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriCart}}",
+						":id",
+						"products"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{cart_id}}",
+							"description": "Cart_id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product in cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{baseUriCart}}/:id/products/:product_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{baseUriCart}}",
+						":id",
+						"products",
+						":product_id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{cart_id}}"
+						},
+						{
+							"key": "product_id",
+							"value": "{{product_id_random}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUriProducts",
+			"value": "api/products"
+		},
+		{
+			"key": "baseUriCart",
+			"value": "api/cart"
+		},
+		{
+			"key": "product_id",
+			"value": ""
+		},
+		{
+			"key": "new_product",
+			"value": ""
+		},
+		{
+			"key": "cart_id",
+			"value": ""
+		}
+	]
+}
