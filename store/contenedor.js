@@ -50,7 +50,7 @@ class Contenedor {
         // console.log("delete by id", datafiltered);
         try {
             await fs.writeFile(this.filePath, JSON.stringify(datafiltered, null, 2));
-            return `Producto borrado`;
+            return `Elemento borrado`;
         } catch (error) {
             return `No se puede modificar los datos`;
         }
