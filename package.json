@@ -12,7 +12,7 @@
     "ignore": ["productsStore.json", "**/docs/**"]
   },
   "engines": {
-    "node": "18.x"
+    "node": "16.x"
   },
   "repository": {
     "type": "git",
