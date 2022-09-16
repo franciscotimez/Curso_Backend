@@ -52,7 +52,7 @@ router.put('/:id', async ({ params, body }, res) => {
   if (productExist) {
     const product = await productsStore.update(id, { title, price: priceParsed, thumbnail });
     console.log(product);
-    res.json(product);
+    return res.json(product);
   }
   return res.json({ error: 'Producto no encontrado' });
 });
@@ -67,7 +67,7 @@ router.delete('/:id', async ({ params }, res) => {
   const productExist = await productsStore.getById(id);
   if (productExist) {
     const message = await productsStore.deleteById(id);
-    res.json({ msg: message });
+    return res.json({ msg: message });
   }
   return res.json({ error: 'Producto no encontrado' });
 });
