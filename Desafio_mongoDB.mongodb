@@ -1,0 +1,69 @@
+// Select the database to use.
+use('ecommerce');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against the correct database and collection.
+db.mensajes.drop();
+db.productos.drop();
+
+// EJ 1 y 2
+db.mensajes.insertMany([
+  { 'message': 'Hola!', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:00:00Z') },
+  { 'message': 'Hola! Como estas?', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:02:00Z') },
+  { 'message': 'Muy Bien! vos?', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:04:00Z') },
+  { 'message': 'Excelente!! ', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:05:00Z') },
+  { 'message': 'Cuando vas a estar por la ciudad?', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:06:00Z') },
+  { 'message': 'Mi vuelo llega el viernes.', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:07:00Z') },
+  { 'message': 'Genial! necesito que nos veamos, sabado?', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:08:00Z') },
+  { 'message': 'Sabado me parece bien! Almuezo?', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:09:00Z') },
+  { 'message': 'Si!!! en casa, un asado! te espero!', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:10:00Z') },
+  { 'message': 'Si genial!!', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:12:00Z') }
+]);
+
+
+db.productos.insertMany([
+  { 'title': 'Escuadra', 'price': 120, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png' },
+  { 'title': 'Calculadora', 'price': 580, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png' },
+  { 'title': 'Globo Terráqueo', 'price': 900, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png' },
+  { 'title': 'mesa', 'price': 1280, 'thumbnail': 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg' },
+  { 'title': 'Silla', 'price': 1700, 'thumbnail': 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`' },
+  { 'title': 'Escuadra Deluxe', 'price': 2300, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png' },
+  { 'title': 'Calculadora Deluxe', 'price': 2860, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png' },
+  { 'title': 'Globo Terráqueo Deluxe', 'price': 3350, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png' },
+  { 'title': 'mesa Deluxe', 'price': 4320, 'thumbnail': 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg' },
+  { 'title': 'Silla Deluxe', 'price': 4990, 'thumbnail': 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`' }
+]);
+
+// Ej 3
+db.mensajes.find()
+db.productos.find()
+
+// Ej 4
+db.mensajes.countDocuments()
+db.productos.countDocuments()
+
+// Ej 5a
+db.productos.insertOne({ 'title': 'Escuadra Metalica', 'price': 4500, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png' })
+
+// Ej 5b
+db.productos.find({ 'price': { $lt : 1000 } })
+db.productos.find({ 'price': { $gt : 1000, $lt: 3000 } })
+db.productos.find({ 'price': { $gt : 3000 } })
+db.productos.find().sort({ 'price': 1 }).skip(2).limit(1).toArray()[0].title
+
+// Ej 5c
+db.productos.updateMany({}, { $set:{'stock': 100} })
+
+// Ej 5d
+db.productos.updateMany({ 'price': { $gt : 4000 } }, { $set:{'stock': 0} })
+
+// Ej 5e
+db.productos.deleteMany({ 'price': { $lt : 1000 } })
+
+// Ej 6
+use admin
+
+db.createUser({'user':'pepe', 'pwd':'asd456', 'roles': [ { 'role': 'read', 'db': 'ecommerce'} ]})
+
+db.productos.findOne()
+db.productos.insertOne({ 'title': 'Producto Nuevo' })

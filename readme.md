@@ -4,7 +4,21 @@ En el trabajo con hbs, pug y ejs
 
 Elijo hbs, es mas practico y ameno con la sintaxis HTML, sabiendo desarrollo web es sencillo y rapido generar plantillas.
 
-## Base de datos
+## Base de datos MongoDB
+Levanto una base de datos con Docker
+```bash
+$ docker run --name coder-mongodb -d \
+    -e MONGO_INITDB_ROOT_USERNAME=coder-user \
+    -e MONGO_INITDB_ROOT_PASSWORD=coder-pass \
+    -p 27017:27017 \
+    mongo:latest
+```
+
+mongodb://coder-user:coder-pass@localhost:27017/coderdb?authSource=admin
+mongodb://pepe:asd456@localhost:27017/ecommerce?authSource=admin
+
+
+## Base de datos MariaDB
 Levanto una base de datos con Docker
 ```bash
 $ docker run --name coder-mariadb -d \

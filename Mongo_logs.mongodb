@@ -1,0 +1,326 @@
+use ecommerce
+
+// EJ 1 y 2
+ecommerce> db.mensajes.insertMany([
+  { 'message': 'Hola!', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:00:00Z') },
+  { 'message': 'Hola! Como estas?', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:02:00Z') },
+  { 'message': 'Muy Bien! vos?', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:04:00Z') },
+  { 'message': 'Excelente!! ', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:05:00Z') },
+  { 'message': 'Cuando vas a estar por la ciudad?', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:06:00Z') },
+  { 'message': 'Mi vuelo llega el viernes.', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:07:00Z') },
+  { 'message': 'Genial! necesito que nos veamos, sabado?', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:08:00Z') },
+  { 'message': 'Sabado me parece bien! Almuezo?', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:09:00Z') },
+  { 'message': 'Si!!! en casa, un asado! te espero!', 'user': 'franciscotimez@gmail.com', 'date': new Date('2022-09-24T08:10:00Z') },
+  { 'message': 'Si genial!!', 'user': 'otro@gmail.com', 'date': new Date('2022-09-24T08:12:00Z') }
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6330549619a1ff5f0f366973"),
+    '1': ObjectId("6330549619a1ff5f0f366974"),
+    '2': ObjectId("6330549619a1ff5f0f366975"),
+    '3': ObjectId("6330549619a1ff5f0f366976"),
+    '4': ObjectId("6330549619a1ff5f0f366977"),
+    '5': ObjectId("6330549619a1ff5f0f366978"),
+    '6': ObjectId("6330549619a1ff5f0f366979"),
+    '7': ObjectId("6330549619a1ff5f0f36697a"),
+    '8': ObjectId("6330549619a1ff5f0f36697b"),
+    '9': ObjectId("6330549619a1ff5f0f36697c")
+  }
+}
+
+ecommerce> db.productos.insertMany([
+  { 'title': 'Escuadra', 'price': 120, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png' },
+  { 'title': 'Calculadora', 'price': 580, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png' },
+  { 'title': 'Globo Terráqueo', 'price': 900, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png' },
+  { 'title': 'mesa', 'price': 1280, 'thumbnail': 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg' },
+  { 'title': 'Silla', 'price': 1700, 'thumbnail': 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`' },
+  { 'title': 'Escuadra Deluxe', 'price': 2300, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png' },
+  { 'title': 'Calculadora Deluxe', 'price': 2860, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png' },
+  { 'title': 'Globo Terráqueo Deluxe', 'price': 3350, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png' },
+  { 'title': 'mesa Deluxe', 'price': 4320, 'thumbnail': 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg' },
+  { 'title': 'Silla Deluxe', 'price': 4990, 'thumbnail': 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`' }
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("633054b319a1ff5f0f36697d"),
+    '1': ObjectId("633054b319a1ff5f0f36697e"),
+    '2': ObjectId("633054b319a1ff5f0f36697f"),
+    '3': ObjectId("633054b319a1ff5f0f366980"),
+    '4': ObjectId("633054b319a1ff5f0f366981"),
+    '5': ObjectId("633054b319a1ff5f0f366982"),
+    '6': ObjectId("633054b319a1ff5f0f366983"),
+    '7': ObjectId("633054b319a1ff5f0f366984"),
+    '8': ObjectId("633054b319a1ff5f0f366985"),
+    '9': ObjectId("633054b319a1ff5f0f366986")
+  }
+}
+
+// Ej 3
+ecommerce> db.mensajes.find()
+[
+  {
+    _id: ObjectId("6330549619a1ff5f0f366973"),
+    message: 'Hola!',
+    user: 'franciscotimez@gmail.com',
+    date: ISODate("2022-09-24T08:00:00.000Z") 
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f366974"),
+    message: 'Hola! Como estas?',
+    user: 'otro@gmail.com',
+    date: ISODate("2022-09-24T08:02:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f366975"),
+    message: 'Muy Bien! vos?',
+    user: 'franciscotimez@gmail.com',
+    date: ISODate("2022-09-24T08:04:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f366976"),
+    message: 'Excelente!! ',
+    user: 'otro@gmail.com',
+    date: ISODate("2022-09-24T08:05:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f366977"),
+    message: 'Cuando vas a estar por la ciudad?',
+    user: 'franciscotimez@gmail.com',
+    date: ISODate("2022-09-24T08:06:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f366978"),
+    message: 'Mi vuelo llega el viernes.',
+    user: 'otro@gmail.com',
+    date: ISODate("2022-09-24T08:07:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f366979"),
+    message: 'Genial! necesito que nos veamos, sabado?',
+    user: 'franciscotimez@gmail.com',
+    date: ISODate("2022-09-24T08:08:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f36697a"),
+    message: 'Sabado me parece bien! Almuezo?',
+    user: 'otro@gmail.com',
+    date: ISODate("2022-09-24T08:09:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f36697b"),
+    message: 'Si!!! en casa, un asado! te espero!',
+    user: 'franciscotimez@gmail.com',
+    date: ISODate("2022-09-24T08:10:00.000Z")
+  },
+  {
+    _id: ObjectId("6330549619a1ff5f0f36697c"),
+    message: 'Si genial!!',
+    user: 'otro@gmail.com',
+    date: ISODate("2022-09-24T08:12:00.000Z")
+  }
+]
+
+ecommerce> db.productos.find()
+[
+  {
+    _id: ObjectId("633054b319a1ff5f0f36697d"),
+    title: 'Escuadra',
+    price: 120,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f36697e"),
+    title: 'Calculadora',
+    price: 580,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f36697f"),
+    title: 'Globo Terráqueo',
+    price: 900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366980"),
+    title: 'mesa',
+    price: 1280,
+    thumbnail: 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366981"),
+    title: 'Silla',
+    price: 1700,
+    thumbnail: 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366982"),
+    title: 'Escuadra Deluxe',
+    price: 2300,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366983"),
+    title: 'Calculadora Deluxe',
+    price: 2860,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366984"),
+    title: 'Globo Terráqueo Deluxe',
+    price: 3350,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366985"),
+    title: 'mesa Deluxe',
+    price: 4320,
+    thumbnail: 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366986"),
+    title: 'Silla Deluxe',
+    price: 4990,
+    thumbnail: 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`'
+  }
+]
+
+// Ej 4
+ecommerce> db.mensajes.countDocuments()
+10
+ecommerce> db.productos.countDocuments()
+10
+
+// Ej 5a
+ecommerce> db.productos.insertOne({ 'title': 'Escuadra Metalica', 'price': 4500, 'thumbnail': 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png' })
+{
+  acknowledged: true,
+  insertedId: ObjectId("6330551819a1ff5f0f366987")
+}
+
+// Ej 5b
+ecommerce> db.productos.find({ 'price': { $lt : 1000 } })
+[
+  {
+    _id: ObjectId("633054b319a1ff5f0f36697d"),
+    title: 'Escuadra',
+    price: 120,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f36697e"),
+    title: 'Calculadora',
+    price: 580,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f36697f"),
+    title: 'Globo Terráqueo',
+    price: 900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png'
+  }
+]
+
+ecommerce> db.productos.find({ 'price': { $gt : 1000, $lt: 3000 } })
+[
+  {
+    _id: ObjectId("633054b319a1ff5f0f366980"),
+    title: 'mesa',
+    price: 1280,
+    thumbnail: 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366981"),
+    title: 'Silla',
+    price: 1700,
+    thumbnail: 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366982"),
+    title: 'Escuadra Deluxe',
+    price: 2300,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366983"),
+    title: 'Calculadora Deluxe',
+    price: 2860,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png'
+  }
+]
+
+ecommerce> db.productos.find({ 'price': { $gt : 3000 } })
+[
+  {
+    _id: ObjectId("633054b319a1ff5f0f366984"),
+    title: 'Globo Terráqueo Deluxe',
+    price: 3350,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366985"),
+    title: 'mesa Deluxe',
+    price: 4320,
+    thumbnail: 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg'
+  },
+  {
+    _id: ObjectId("633054b319a1ff5f0f366986"),
+    title: 'Silla Deluxe',
+    price: 4990,
+    thumbnail: 'https://thumbs.dreamstime.com/b/silla-del-vector-en-el-fondo-blanco-124755666.jpg`'
+  },
+  {
+    _id: ObjectId("6330551819a1ff5f0f366987"),
+    title: 'Escuadra Metalica',
+    price: 4500,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+  }
+]
+
+ecommerce> db.productos.find().sort({ 'price': 1 }).skip(2).limit(1).toArray()[0].title
+Globo Terráqueo
+
+// Ej 5c
+ecommerce> db.productos.updateMany({}, { $set:{'stock': 100} })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 11,
+  modifiedCount: 11,
+  upsertedCount: 0
+}
+
+// Ej 5d
+ecommerce> db.productos.updateMany({ 'price': { $gt : 4000 } }, { $set:{'stock': 0} })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+
+// Ej 5e
+ecommerce> db.productos.deleteMany({ 'price': { $lt : 1000 } })
+{ acknowledged: true, deletedCount: 3 }
+
+// Ej 6
+use admin
+switched to db admin
+
+admin> db.createUser({'user':'pepe', 'pwd':'asd456', 'roles': [ { 'role': 'read', 'db': 'ecommerce'} ]})
+{ ok: 1 }
+
+// Connect with mongodb://pepe:asd456@localhost:27017/ecommerce?authSource=admin
+ecommerce> db.productos.findOne()
+{
+  _id: 4,
+  title: 'mesa',
+  price: 1280,
+  thumbnail: 'https://www.espacity.com/w/wp-content/uploads/01476001000020_1-768x624.jpg',
+  stock: 100
+}
+
+ecommerce> db.productos.insertOne({ 'title': 'Producto Nuevo' })
+MongoServerError: not authorized on ecommerce to execute command { insert: "productos", documents: [ { title: "Producto nuevo", _id: ObjectId('6330536133fb448f91334660') } ], ordered: true, lsid: { id: UUID("3ac07cba-b516-48c1-b4eb-ff0879aa914f") }, $db: "ecommerce" }
