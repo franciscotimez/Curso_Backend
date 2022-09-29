@@ -1,8 +1,8 @@
-const { Contenedor } = require('./contenedor');
+const { ContenedorFS } = require('./contenedores/contenedorFS');
 
 
 (async () => {
-    const productos = new Contenedor("./products.json");
+    const productos = new ContenedorFS("./products.json");
 
     let result = ``;
 

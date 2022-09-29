@@ -1,5 +1,4 @@
 
-const { promises: fs } = require('fs');
 
 class Contenedor {
     constructor(filePath) {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { productsStore } = require('../store/storeContenedores');
+const { productsStore } = require('../store');
 const { normalizeProduct } = require('./helpers/product');
 
 // Obtiene todos los productos

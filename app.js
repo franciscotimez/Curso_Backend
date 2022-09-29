@@ -1,6 +1,4 @@
 const { normalizePort, onError } = require('./helpers/helpers');
-const { normalizeProduct } = require('./routes/helpers/product');
-const { normalizeCart } = require('./routes/helpers/cart');
 const createError = require('http-errors');
 var debug = require('debug')('proyectoexpress:server');
 const express = require('express');

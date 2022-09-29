@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { cartStore } = require('../store/storeContenedores');
-const { productsStore } = require('../store/storeContenedores');
+const { cartStore } = require('../store');
+const { productsStore } = require('../store');
 const { normalizeCart } = require('./helpers/cart');
 
 
