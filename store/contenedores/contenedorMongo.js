@@ -1,6 +1,6 @@
 
 
-class Contenedor {
+class ContenedorMongo {
     constructor(filePath) {
         this.filePath = filePath;
         this.lastId = 0;
@@ -82,6 +82,6 @@ class Contenedor {
     }
 }
 
-module.exports = { Contenedor };
+module.exports = { ContenedorMongo };
 
 

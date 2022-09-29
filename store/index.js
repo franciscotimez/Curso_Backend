@@ -1,11 +1,12 @@
-const { ContenedorFS } = require('./contenedores/contenedorFS');
+const { CartDaoFS } = require('./daos/cart/CartDaoFS');
+const { ProductsDaoFS } = require('./daos/products/ProductsDaoFS');
 
 let productsStore;
 let cartStore;
 
 (async () => {
-    productsStore = new ContenedorFS("./productsStore.json");
-    cartStore = new ContenedorFS("./cartStore.json");
+    productsStore = new ProductsDaoFS();
+    cartStore = new CartDaoFS();
     console.log("load json file");
 })();
 
