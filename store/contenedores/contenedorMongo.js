@@ -1,8 +1,9 @@
+const mongoose = require('mongoose');
 
 
 class ContenedorMongo {
-    constructor(filePath) {
-        this.filePath = filePath;
+    constructor(collectionName, schema) {
+        const container = mongoose.model(collectionName, schema);
         this.lastId = 0;
     }
 
