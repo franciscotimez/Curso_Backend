@@ -1,13 +1,14 @@
 
-const { STORE_DATASOURCE, MONGO_DB } = require('../config');
+const { STORE_DATASOURCE, MONGO_DB, FIREBASE_DB } = require('../config');
 const mongoose = require('mongoose');
+const path = require("path");
+
 const { CartDaoFS } = require('./daos/cart/CartDaoFS');
 const { ProductsDaoFS } = require('./daos/products/ProductsDaoFS');
 const { ProductsDaoMongoDB } = require('./daos/products/ProductsDaoMongoDB');
 const { CartDaoMongoDB } = require('./daos/cart/CartDaoMongoDB');
 const { ProductsDaoFirebase } = require('./daos/products/ProductsDaoFirebase');
 const { CartDaoMongoFirebase } = require('./daos/cart/CartDaoMongoFirebase');
-
 let productsStore;
 let cartStore;
 
@@ -36,7 +37,7 @@ let cartStore;
         case "FIREBASE":
             // Conexion a la DB
             const admin = require("firebase-admin");
-            const serviceAccount = require("../db/coder-backend-f8b55-firebase-adminsdk-6onw8-4ba9733517.json");
+            const serviceAccount = require(path.relative(__dirname, FIREBASE_DB.SA_PATH));
 
             admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount)
