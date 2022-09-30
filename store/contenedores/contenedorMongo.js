@@ -1,83 +1,52 @@
 const mongoose = require('mongoose');
 
-
 class ContenedorMongo {
     constructor(collectionName, schema) {
-        const container = mongoose.model(collectionName, schema);
-        this.lastId = 0;
+        this.container = mongoose.model(collectionName, schema);
+        this.lastId = null;
+    }
+
+    async updateMaxId() {
+        if (this.lastId === null) {
+            const id = await this.container.findOne({}, { id: 1 }).sort({ id: -1 });
+            this.lastId = id === null ? 0 : id.id;
+        }
     }
 
     async save(obj) {
-        let data = await this.getAll();
-        const newObj = { id: ++this.lastId, ...obj };
-        // console.log(`Nuevo objeto: `, newObj);
-        data = [...data, newObj];
-
-        await fs.writeFile(this.filePath, JSON.stringify(data, null, 2));
-        // console.log(`Se creo archivo ${this.filePath}`);
-        return newObj;
+        const newObj = new this.container({ id: ++this.lastId, ...obj });
+        const savedObj = await newObj.save();
+        const rtnObj = await this.container.findOne({ _id: savedObj._id }, { _id: 0, __v: 0 });
+        return rtnObj;
     }
 
     async getById(id) {
-        let data = await this.getAll();
-        return data.find(data => data.id === id);
+        const obj = await this.container.findOne({ id }, { _id: 0, __v: 0 });
+        if (obj) {
+            return { ...obj._doc };
+        }
+        return null;
     }
 
     async getAll() {
-        try {
-            let raw = await fs.readFile(this.filePath, 'utf8');
-            let data = JSON.parse(raw);
-            let lastId = [0, ...data.map(item => item.id)];
-            this.lastId = Math.max(...lastId);
-            // console.log(`Se leyo archivo ${this.filePath}, lastId: `, this.lastId);
-            return data;
-        } catch (e) {
-            if (e.code === 'ENOENT') {
-                try {
-                    await fs.writeFile(this.filePath, JSON.stringify([]));
-                    // console.log(`Se creo archivo ${this.filePath}`);
-                    return [];
-                } catch (error) {
-                    return `No se puede modificar los datos`;
-                }
-            }
-        }
+        const obj = await this.container.find({}, { _id: 0, __v: 0 });
+        return obj;
     }
 
     async deleteById(id) {
-        let data = await this.getAll();
-        let datafiltered = data.filter(item => item.id != id);
-        // console.log("delete by id", datafiltered);
-        try {
-            await fs.writeFile(this.filePath, JSON.stringify(datafiltered, null, 2));
-            return `Elemento borrado`;
-        } catch (error) {
-            return `No se puede modificar los datos`;
+        const obj = await this.container.deleteOne({ id });
+        if (obj.deletedCount > 0) {
+            return "Elemento borrado con exito";
         }
+        return "Elemento no encontrado";
     }
 
     async deleteAll() {
-        try {
-            await fs.writeFile(this.filePath, JSON.stringify([]));
-        } catch (error) {
-            return `No se puede modificar los datos`;
-        }
+        const obj = await this.container.deleteMany({});
     }
 
     async update(id, obj) {
-        let data = await this.getAll();
-        let newData = data.map(item => {
-            if (item.id === id) {
-                return {
-                    ...item,
-                    ...obj
-                };
-            }
-            return item;
-        });
-
-        await fs.writeFile(this.filePath, JSON.stringify(newData, null, 2));
-        // console.log(`Se creo archivo ${this.filePath}`);
+        const updateObj = await this.container.updateOne({ id }, { $set: { ...obj } });
         const updatedObj = await this.getById(id);
         return updatedObj;
     }
