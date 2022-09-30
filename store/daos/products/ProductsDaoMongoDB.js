@@ -7,9 +7,6 @@ class ProductsDaoMongoDB extends ContenedorMongo {
     constructor() {
         super(collectionName, productSchema);
     }
-
-    async disconect() {
-    }
 }
 
 module.exports = { ProductsDaoMongoDB };

@@ -5,6 +5,8 @@ const { CartDaoFS } = require('./daos/cart/CartDaoFS');
 const { ProductsDaoFS } = require('./daos/products/ProductsDaoFS');
 const { ProductsDaoMongoDB } = require('./daos/products/ProductsDaoMongoDB');
 const { CartDaoMongoDB } = require('./daos/cart/CartDaoMongoDB');
+const { ProductsDaoFirebase } = require('./daos/products/ProductsDaoFirebase');
+const { CartDaoMongoFirebase } = require('./daos/cart/CartDaoMongoFirebase');
 
 let productsStore;
 let cartStore;
@@ -30,6 +32,25 @@ let cartStore;
             await productsStore.updateMaxId();
             break;
 
+        case "FIREBASE":
+            // Conexion a la DB
+            const admin = require("firebase-admin");
+            const serviceAccount = require("../db/coder-backend-f8b55-firebase-adminsdk-6onw8-4ba9733517.json");
+
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount)
+            });
+            console.log("[FIREBASE] -> Connected.");
+
+            const db = admin.firestore();
+
+            productsStore = new ProductsDaoFirebase(db);
+            cartStore = new CartDaoMongoFirebase(db);
+
+            // Get Max Id
+            await productsStore.updateMaxId();
+            break;
+
         default:
             console.log("[STORE_DATASOURCE] -> Not matching: ", STORE_DATASOURCE);
             throw new Error("[STORE_DATASOURCE] -> Not matching");
@@ -38,3 +59,5 @@ let cartStore;
 })();
 
 module.exports = { productsStore, cartStore };
+
+

@@ -7,9 +7,6 @@ class CartDaoMongoDB extends ContenedorMongo {
     constructor() {
         super(collectionName, cartSchema);
     }
-
-    async disconect() {
-    }
 }
 
 module.exports = { CartDaoMongoDB };
