@@ -26,6 +26,7 @@ let cartStore;
             productsStore = new ProductsDaoMongoDB();
             cartStore = new CartDaoMongoDB();
             // Conexion a la DB
+            console.log("[MONGO] -> Connecting to: ", MONGO_DB.CONN_STRING);
             await mongoose.connect(MONGO_DB.CONN_STRING);
             console.log("[MONGO] -> Connected.");
             // Get Max Id
