@@ -1,16 +1,16 @@
-const { normalizePort, onError, onListening } = require('./helpers/helpers');
-const createError = require('http-errors');
-var debug = require('debug')('proyectoexpress:server');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+import { normalizePort, onError } from './helpers/helpers.js';
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-const indexRouter = require('./routes/index');
-const { router: productsRouter, productsStore } = require('./routes/productos');
+import indexRouter from './routes/index.js';
+import { router as productsRouter, productsStore } from './routes/productos.js';
+import { router as productsTestRouter } from './routes/productos-test.js';
 
-const http = require('http');
-const { Server } = require("socket.io");
+import http from 'http';
+import { Server } from "socket.io";
 
 const app = express();
 
@@ -20,9 +20,11 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = new Server(server);
 
-const { mensajes } = require('./store/indexContenedor');
+import { mensajes } from './store/indexContenedor.js';
 
-
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -36,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/productos', productsRouter);
+app.use('/api/productos-test', productsTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -85,6 +88,6 @@ server.on('listening', () => {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 });
 

@@ -1,7 +1,7 @@
 /**
  * Normalize a port into a number, string, or false.
  */
-function normalizePort(val) {
+export const normalizePort = (val) => {
     const port = parseInt(val, 10);
 
     if (isNaN(port)) {
@@ -15,12 +15,12 @@ function normalizePort(val) {
     }
 
     return false;
-}
+};
 
 /**
  * Event listener for HTTP server "error" event.
  */
-function onError(error) {
+export const onError = (error) => {
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -42,10 +42,4 @@ function onError(error) {
         default:
             throw error;
     }
-}
-
-
-module.exports = {
-    normalizePort,
-    onError
 };

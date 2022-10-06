@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const { productos:productsStore } = require('../store/indexContenedor');
+import { productos as productsStore } from '../store/indexContenedor.js';
 
 // Obtiene todos los productos
 router.get('', async (req, res) => {
@@ -72,7 +72,7 @@ router.delete('/:id', async ({ params }, res) => {
   return res.json({ error: 'Producto no encontrado' });
 });
 
-module.exports = {
+export {
   router,
   productsStore
 };

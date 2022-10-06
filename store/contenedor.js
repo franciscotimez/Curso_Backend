@@ -1,7 +1,7 @@
 
-const { promises: fs } = require('fs');
+import { promises as fs } from 'fs';
 
-class Contenedor {
+export class Contenedor {
     constructor(filePath) {
         this.filePath = filePath;
         this.lastId = 0;
@@ -82,7 +82,4 @@ class Contenedor {
         return updatedObj;
     }
 }
-
-module.exports = { Contenedor };
-
 

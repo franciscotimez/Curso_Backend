@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 
 const port = 8080;
 
 const app = express();
 
-const indexRouter = require('./src/routes/indexRoutes');
+import indexRouter from './src/routes/indexRoutes';
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

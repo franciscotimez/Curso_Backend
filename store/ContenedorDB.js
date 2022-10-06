@@ -1,9 +1,10 @@
+import pkg from 'knex';
+const { Knex } = pkg;
 
-
-class ContenedorDB {
+export class ContenedorDB {
     constructor(options, tableName) {
         this.tableName = tableName;
-        this.knex = require('knex')(options);
+        this.knex = Knex(options);
     }
 
     async save(obj) {
@@ -46,7 +47,3 @@ class ContenedorDB {
         return updatedObj;
     }
 }
-
-module.exports = { ContenedorDB };
-
-

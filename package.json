@@ -2,6 +2,7 @@
   "name": "curso_backend",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/franciscotimez/Curso_Backend#readme",
   "dependencies": {
+    "@faker-js/faker": "^7.5.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",

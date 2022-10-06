@@ -1,4 +1,4 @@
-const configMariaDb = {
+export const configMariaDb = {
     client: 'mysql',
     connection: {
         host: '127.0.0.1',
@@ -9,15 +9,10 @@ const configMariaDb = {
     }
 };
 
-const configSQlite3 = {
+export const configSQlite3 = {
     client: 'sqlite3', // or 'better-sqlite3'
     connection: {
         filename: "./messages.sqlite"
     },
     useNullAsDefault: true
-};
-
-module.exports = {
-    configMariaDb,
-    configSQlite3
 };

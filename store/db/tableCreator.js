@@ -1,6 +1,9 @@
-const tableCreator = (configDB, tableName, tableSchema) => {
+import pkg from 'knex';
+const { Knex } = pkg;
 
-    const knex = require('knex')(configDB);
+export const tableCreator = (configDB, tableName, tableSchema) => {
+
+    const knex = Knex(configDB);
 
     knex.schema.createTable(tableName, tableSchema)
         .then(() => console.log(`Tabla ${tableName} Creada`))
@@ -16,5 +19,3 @@ const tableCreator = (configDB, tableName, tableSchema) => {
             knex.destroy();
         });
 };
-
-module.exports = { tableCreator };

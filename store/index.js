@@ -1,4 +1,4 @@
-const { Contenedor } = require('./contenedor');
+import { Contenedor } from './contenedor';
 
 
 (async () => {

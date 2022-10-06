@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+const router = express.Router();
 
-const { productsStore } = require('./productos');
+import { productsStore } from './productos.js';
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -16,4 +16,4 @@ router.get('/productos', async (req, res, next) => {
   });
 });
 
-module.exports = router;
+export default router;
