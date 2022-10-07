@@ -1,4 +1,5 @@
 import { Contenedor } from './contenedor.js';
+import { ContenedorMensajes } from './contenedorMensajes.js';
 
 import { ContenedorDB } from './ContenedorDB.js';
 import { tableCreator } from './db/tableCreator.js';
@@ -16,7 +17,7 @@ let mensajes;
 
 (async () => {
     productos = new Contenedor("./products.json");
-    mensajes = new Contenedor("./mensajes.json");
+    mensajes = new ContenedorMensajes("./mensajes.json");
 
     // Crea Tabla Productos
     // tableCreator(configMariaDb, tableNameProducts, productSchema);

@@ -41,16 +41,56 @@
     </div>
     <div id="chat-box" class="col-6">
       <h1>Centro de mensajes</h1>
-      <form>
+      <form id="form-author">
         <div class="mb-3">
-          <label for="inputEmail" class="form-label">Ingrese su email</label>
+          <label for="inputEmail" class="form-label">e-mail</label>
           <input
             type="email"
             class="form-control"
             id="inputEmail"
-            name="user"
+            name="email"
+          />
+          <label for="inputName" class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputName"
+            name="name"
+          />
+          <label for="inputLastname" class="form-label">Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputLastname"
+            name="lastname"
+          />
+          <label for="inputAge" class="form-label">Edad</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAge"
+            name="age"
+          />
+          <label for="inputAlias" class="form-label">Alias</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAlias"
+            name="alias"
+          />
+          <label for="inputAvatar" class="form-label">Avatar URL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAvatar"
+            name="avatar"
           />
         </div>
+        <button
+          type="submit"
+          form="form-author"
+          class="btn btn-primary"
+        >Ingresar</button>
       </form>
     </div>
   </div>

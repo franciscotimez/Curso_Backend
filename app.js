@@ -22,7 +22,7 @@ const io = new Server(server);
 
 import { mensajes } from './store/indexContenedor.js';
 
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // view engine setup
@@ -69,10 +69,12 @@ io.on('connection', async (socket) => {
   });
 
   socket.on("newMessage-channel", async (data) => {
-    console.log("Recibido: ", data);
-    await mensajes.save(data);
-    messagesContainer = [...messagesContainer, data];
-    io.emit('newMessage-channel', data);
+    if (data !== "start") {
+      console.log("Mensaje Recibido: ", data);
+      await mensajes.save(data);
+    }
+    const messages = await mensajes.getAllNormalized();
+    io.emit('newMessage-channel', messages);
   });
 
   socket.on('disconnect', () => {
