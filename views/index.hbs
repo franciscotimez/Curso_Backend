@@ -1,6 +1,22 @@
 <div class="container-md">
   <div class="row">
     <div class="col-6">
+      <h1>Bienvenido {{userName}}</h1>
+    </div>
+    <div class="col-6">
+      <form id="logout" action="/logout">
+        <button
+          type="submit"
+          form="logout"
+          class="btn btn-primary"
+        >Logout</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-md">
+  <div class="row">
+    <div class="col-6">
 
       <h1>Ingreso Producto</h1>
       <form id="form-product" method="post" action="/api/productos/">
@@ -41,56 +57,33 @@
     </div>
     <div id="chat-box" class="col-6">
       <h1>Centro de mensajes</h1>
-      <form id="form-author">
+      <h5>Usuario: {{userEmail}}</h5>
+      <div id="message-list">
+
+      </div>
+      <form
+        id="form-chat"
+        data-email="{{userEmail}}"
+        data-name="{{userName}}"
+        data-lastname="{{userLastname}}"
+        data-age="{{userAge}}"
+        data-alias="{{userAlias}}"
+        data-avatar="{{userAvatar}}"
+      >
         <div class="mb-3">
-          <label for="inputEmail" class="form-label">e-mail</label>
-          <input
-            type="email"
-            class="form-control"
-            id="inputEmail"
-            name="email"
-          />
-          <label for="inputName" class="form-label">Nombre</label>
+          <label for="inputMsg" class="form-label">Mensaje</label>
           <input
             type="text"
             class="form-control"
-            id="inputName"
-            name="name"
-          />
-          <label for="inputLastname" class="form-label">Apellido</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputLastname"
-            name="lastname"
-          />
-          <label for="inputAge" class="form-label">Edad</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAge"
-            name="age"
-          />
-          <label for="inputAlias" class="form-label">Alias</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAlias"
-            name="alias"
-          />
-          <label for="inputAvatar" class="form-label">Avatar URL</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAvatar"
-            name="avatar"
+            id="inputMsg"
+            name="message"
           />
         </div>
         <button
           type="submit"
-          form="form-author"
+          form="form-chat"
           class="btn btn-primary"
-        >Ingresar</button>
+        >Enviar</button>
       </form>
     </div>
   </div>

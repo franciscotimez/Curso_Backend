@@ -12,6 +12,11 @@ import { router as productsTestRouter } from './routes/productos-test.js';
 import http from 'http';
 import { Server } from "socket.io";
 
+// Session Store
+import session from "express-session";
+import MongoStore from 'connect-mongo';
+const mongoUrl = "mongodb+srv://mongo_sessions:RpmXaBojL4tl1cdn@cluster0.tojpqrg.mongodb.net/coderhouse?retryWrites=true&w=majority";
+
 const app = express();
 
 const port = normalizePort(process.env.PORT || '8080');
@@ -30,9 +35,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
+
+// Session Middleware
+app.use(session({
+  store: MongoStore.create({ mongoUrl , ttl: 10*60}),
+  secret: "estoEsSecreto",
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 

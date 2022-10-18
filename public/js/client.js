@@ -105,7 +105,14 @@ let formChat;
 let author = {};
 const onSubmitMsg = (event) => {
   event.preventDefault();
-
+  author = {
+    email: formChat.dataset.email,
+    name: formChat.dataset.name,
+    lastname: formChat.dataset.lastname,
+    age: formChat.dataset.age,
+    alias: formChat.dataset.alias,
+    avatar: formChat.dataset.avatar,
+  };
   const data = {
     message: formChat.elements["inputMsg"].value,
     date: new Date().toLocaleString(),
@@ -115,31 +122,6 @@ const onSubmitMsg = (event) => {
   socket.emit("newMessage-channel", data);
   formChat.reset();
 };
-
-// listener para el formulario del chat
-const formAuthor = document.getElementById("form-author");
-formAuthor.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  author = {
-    email: formAuthor.elements["inputEmail"].value,
-    name: formAuthor.elements["inputName"].value,
-    lastname: formAuthor.elements["inputLastname"].value,
-    age: formAuthor.elements["inputAge"].value,
-    alias: formAuthor.elements["inputAlias"].value,
-    avatar: formAuthor.elements["inputAvatar"].value,
-  };
-  if (author.email.indexOf('@') >= 0) {
-    let renderChat = Handlebars.compile(templates.chatBox.template);
-    document.getElementById("chat-box").innerHTML = renderChat({
-      userEmail: author.email
-    });
-    socket.emit("newMessage-channel", "start");
-    renderMessages([]);
-    formChat = document.getElementById("form-chat");
-    formChat.addEventListener('submit', onSubmitMsg);
-  }
-});
 
 const renderMessages = (messages) => {
   console.log("Render", messages);
@@ -154,3 +136,11 @@ const renderMessages = (messages) => {
     msgExists: messages.length,
   });
 };
+
+// listener para el formulario del chat
+socket.emit("newMessage-channel", "start");
+renderMessages([]);
+formChat = document.getElementById("form-chat");
+formChat.addEventListener('submit', onSubmitMsg);
+
+
