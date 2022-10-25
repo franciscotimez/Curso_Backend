@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import indexRouter from './routes/index.js';
+import { router as authRouter } from './routes/auth.js';
 import { router as productsRouter, productsStore } from './routes/productos.js';
 import { router as productsTestRouter } from './routes/productos-test.js';
 
@@ -16,6 +17,9 @@ import { Server } from "socket.io";
 import session from "express-session";
 import MongoStore from 'connect-mongo';
 const mongoUrl = "mongodb+srv://mongo_sessions:RpmXaBojL4tl1cdn@cluster0.tojpqrg.mongodb.net/coderhouse?retryWrites=true&w=majority";
+
+// Passport Login and Session
+import { passportMiddleware, passportSessionHandler } from './middleware/passport.js';
 
 const app = express();
 
@@ -41,15 +45,21 @@ app.use(cookieParser());
 
 // Session Middleware
 app.use(session({
-  store: MongoStore.create({ mongoUrl , ttl: 10*60}),
+  store: MongoStore.create({ mongoUrl, ttl: 10 * 60 }),
   secret: "estoEsSecreto",
   resave: false,
   saveUninitialized: false,
 }));
 
+// Passport Login and Session
+// app.use(sessionHandler);
+app.use(passportMiddleware);
+app.use(passportSessionHandler);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/productos', productsRouter);
 app.use('/api/productos-test', productsTestRouter);
 
