@@ -12,13 +12,14 @@ const tableNameProducts = 'products';
 import { messageSchema } from './db/messageSchema.js';
 import { UsersDaoMongoDB } from './daos/UsersDaoMongoDB.js';
 import mongoose from 'mongoose';
+import { config } from '../config.js';
+
 const tableNameMessages = 'messages';
 
 let productos;
 let mensajes;
 let usersStore;
 
-const mongoUrl = "mongodb+srv://mongo_sessions:RpmXaBojL4tl1cdn@cluster0.tojpqrg.mongodb.net/coderhouse?retryWrites=true&w=majority";
 
 (async () => {
     productos = new Contenedor("./products.json");
@@ -34,8 +35,8 @@ const mongoUrl = "mongodb+srv://mongo_sessions:RpmXaBojL4tl1cdn@cluster0.tojpqrg
 
     usersStore = new UsersDaoMongoDB();
     // Conexion a la DB
-    console.log("[MONGO] -> Connecting to: ", mongoUrl);
-    await mongoose.connect(mongoUrl);
+    console.log("[MONGO] -> Connecting to: ", config.MONGO_URL);
+    await mongoose.connect(config.MONGO_URL);
     console.log("[MONGO] -> Connected.");
     // Get Max Id
     await usersStore.updateMaxId();

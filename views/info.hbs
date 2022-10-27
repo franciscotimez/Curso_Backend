@@ -1,0 +1,22 @@
+<div class="container-md">
+  <div class="row">
+    <div class="col-10">
+      <h3>Argumentos:</h3>
+      {{#each argv}}
+        <p>- {{this}}</p>
+      {{/each}}
+      <h3>Plataforma:</h3>
+      <p>{{platform}}</p>
+      <h3>NodeJS Version:</h3>
+      <p>{{nodeVersion}}</p>
+      <h3>Memoria reservada:</h3>
+      <p>{{memoryUsage}} MB</p>
+      <h3>Path:</h3>
+      <p>{{execPath}}</p>
+      <h3>Process ID:</h3>
+      <p>{{pid}}</p>
+      <h3>Carpeta:</h3>
+      <p>{{path}}</p>
+    </div>
+  </div>
+</div>

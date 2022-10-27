@@ -9,22 +9,21 @@ import indexRouter from './routes/index.js';
 import { router as authRouter } from './routes/auth.js';
 import { router as productsRouter, productsStore } from './routes/productos.js';
 import { router as productsTestRouter } from './routes/productos-test.js';
+import { router as randomRouter } from './routes/random.js';
+import { router as infoRouter } from './routes/info.js';
 
 import http from 'http';
 import { Server } from "socket.io";
+import { config } from './config.js';
 
 // Session Store
 import session from "express-session";
 import MongoStore from 'connect-mongo';
-const mongoUrl = "mongodb+srv://mongo_sessions:RpmXaBojL4tl1cdn@cluster0.tojpqrg.mongodb.net/coderhouse?retryWrites=true&w=majority";
 
 // Passport Login and Session
 import { passportMiddleware, passportSessionHandler } from './middleware/passport.js';
 
 const app = express();
-
-const port = normalizePort(process.env.PORT || '8080');
-app.set('port', port);
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -45,7 +44,7 @@ app.use(cookieParser());
 
 // Session Middleware
 app.use(session({
-  store: MongoStore.create({ mongoUrl, ttl: 10 * 60 }),
+  store: MongoStore.create({ mongoUrl: config.MONGO_URL, ttl: 10 * 60 }),
   secret: "estoEsSecreto",
   resave: false,
   saveUninitialized: false,
@@ -62,6 +61,8 @@ app.use('/', indexRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/productos', productsRouter);
 app.use('/api/productos-test', productsTestRouter);
+app.use('/api/random', randomRouter);
+app.use('/info', infoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -105,8 +106,9 @@ io.on('connection', async (socket) => {
   });
 });
 
+// console.log({process})
 
-server.listen(port);
+server.listen(config.PORT);
 server.on('error', onError);
 server.on('listening', () => {
   const addr = server.address();
