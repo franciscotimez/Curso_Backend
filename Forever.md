@@ -2,7 +2,7 @@
 ## forever en FORK mode
 
 ```bash
-$ forever start app.js
+$ forever start --watch app.js
 $ forever list
 info:    Forever processes running
 data:        uid  command                            script                                                          forever pid   id logfile                          uptime
@@ -21,7 +21,7 @@ $ forever stopall
 ## forever en CLUSTER mode
 
 ```bash
-$ forever start app.js -m CLUSTER
+$ forever start --watch app.js -m CLUSTER
 $ forever list
 info:    Forever processes running
 data:        uid  command                            script                                                                     forever pid   id logfile                          uptime
