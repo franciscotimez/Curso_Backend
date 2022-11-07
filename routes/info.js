@@ -1,4 +1,5 @@
 import express from 'express';
+import { cpus } from 'node:os';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.get(
       execPath: process.execPath,
       pid: process.pid,
       path: process.cwd(),
+      cpus: cpus().length
     });
   }
 );

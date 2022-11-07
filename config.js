@@ -6,13 +6,15 @@ dotenv.config();
 
 const args = parseArgs(process.argv.slice(2), {
   alias: {
-    p: "PORT"
+    p: "PORT",
+    m: "MODE"
   }
 });
 
-// console.log(args);
+console.log(args);
 
 export const config = {
   PORT: normalizePort(args.PORT || process.env.PORT || '8080'),
-  MONGO_URL: process.env.MONGO_CONN_STRING
+  MONGO_URL: process.env.MONGO_CONN_STRING,
+  SERVER_MODE: args.MODE === "CLUSTER" ? "CLUSTER" : "FORK"
 };

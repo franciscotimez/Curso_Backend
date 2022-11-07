@@ -1,3 +1,6 @@
+import cluster from 'cluster';
+import { cpus } from 'node:os';
+
 import { normalizePort, onError } from './helpers/helpers.js';
 import createError from 'http-errors';
 import express from 'express';
@@ -23,98 +26,117 @@ import MongoStore from 'connect-mongo';
 // Passport Login and Session
 import { passportMiddleware, passportSessionHandler } from './middleware/passport.js';
 
-const app = express();
-
-const server = http.createServer(app);
-const io = new Server(server);
-
 import { mensajes } from './store/indexContenedor.js';
 
 import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cookieParser());
+console.log("Procesors: ",);
+const numCPUs = cpus().length;
 
-// Session Middleware
-app.use(session({
-  store: MongoStore.create({ mongoUrl: config.MONGO_URL, ttl: 10 * 60 }),
-  secret: "estoEsSecreto",
-  resave: false,
-  saveUninitialized: false,
-}));
+if (cluster.isPrimary && config.SERVER_MODE == "CLUSTER") {
+  console.log("---> CLUSTER MODE!!!!")
+  console.log(`Primary ${process.pid} is running`);
 
-// Passport Login and Session
-// app.use(sessionHandler);
-app.use(passportMiddleware);
-app.use(passportSessionHandler);
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+  cluster.on('online', function (worker) {
+    console.log('Worker ' + worker.process.pid + ' is online.');
+  });
+  cluster.on('exit', function (worker, code, signal) {
+    console.log('worker ' + worker.process.pid + ' died.');
+  });
+}
+else {
+  const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+  const server = http.createServer(app);
+  const io = new Server(server);
 
-app.use('/', indexRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/productos', productsRouter);
-app.use('/api/productos-test', productsTestRouter);
-app.use('/api/random', randomRouter);
-app.use('/info', infoRouter);
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  // view engine setup
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'hbs');
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+  app.use(logger('dev'));
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
+  app.use(cookieParser());
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // Session Middleware
+  app.use(session({
+    store: MongoStore.create({ mongoUrl: config.MONGO_URL, ttl: 10 * 60 }),
+    secret: "estoEsSecreto",
+    resave: false,
+    saveUninitialized: false,
+  }));
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // Passport Login and Session
+  // app.use(sessionHandler);
+  app.use(passportMiddleware);
+  app.use(passportSessionHandler);
 
-let messagesContainer = [];
-// Socket.io Events
-io.on('connection', async (socket) => {
-  console.log('a user connected');
-  const products = await productsStore.getAll();
-  socket.emit('products-channel', products);
+  app.use(express.static(path.join(__dirname, 'public')));
 
-  socket.on("newProduct-channel", (data) => {
-    console.log("Recibido: ", data);
-    io.emit('newProduct-channel', data);
+  app.use('/', indexRouter);
+  app.use('/api/auth', authRouter);
+  app.use('/api/productos', productsRouter);
+  app.use('/api/productos-test', productsTestRouter);
+  app.use('/api/random', randomRouter);
+  app.use('/info', infoRouter);
+
+  // catch 404 and forward to error handler
+  app.use(function (req, res, next) {
+    next(createError(404));
   });
 
-  socket.on("newMessage-channel", async (data) => {
-    if (data !== "start") {
-      console.log("Mensaje Recibido: ", data);
-      await mensajes.save(data);
-    }
-    const messages = await mensajes.getAllNormalized();
-    io.emit('newMessage-channel', messages);
+  // error handler
+  app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
   });
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  let messagesContainer = [];
+  // Socket.io Events
+  io.on('connection', async (socket) => {
+    console.log('a user connected');
+    const products = await productsStore.getAll();
+    socket.emit('products-channel', products);
+
+    socket.on("newProduct-channel", (data) => {
+      console.log("Recibido: ", data);
+      io.emit('newProduct-channel', data);
+    });
+
+    socket.on("newMessage-channel", async (data) => {
+      if (data !== "start") {
+        console.log("Mensaje Recibido: ", data);
+        await mensajes.save(data);
+      }
+      const messages = await mensajes.getAllNormalized();
+      io.emit('newMessage-channel', messages);
+    });
+
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
   });
-});
 
-// console.log({process})
+  // console.log({process})
 
-server.listen(config.PORT);
-server.on('error', onError);
-server.on('listening', () => {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  console.log('Listening on ' + bind);
-});
-
+  server.listen(config.PORT);
+  server.on('error', onError);
+  server.on('listening', () => {
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    console.log('Listening on ' + bind);
+  });
+}
